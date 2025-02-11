@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
+import { IsString, IsNotEmpty, IsNumber, IsOptional, IsUUID } from "class-validator";
 
 export class AddressDto {
     @ApiProperty({ example: '1234 Main St' })
@@ -33,13 +33,13 @@ export class CreateAddressDto extends AddressDto {
     @ApiProperty({ example: 1 })
     @IsNumber()
     @IsNotEmpty()
-    clientId: number;
+    clientId: string;
 }
 
 export class UpsertAddressDto extends AddressDto {
     @ApiProperty({ example: 1 })
-    @IsNumber()
+    @IsUUID()
     @IsNotEmpty()
     @IsOptional()
-    id: number;
+    id: string;
 }

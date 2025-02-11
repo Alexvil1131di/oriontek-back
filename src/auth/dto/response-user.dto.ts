@@ -9,5 +9,5 @@ export class ResponseLoginDto extends OmitType(SignUpUserDto, ['password']) {
     zoho_access_token: string;
 
     @ApiProperty({ example: '15' })
-    id: number;
+    id: string;
 }

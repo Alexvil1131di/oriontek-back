@@ -20,6 +20,6 @@ export class ClientController {
   @ApiOperation({ summary: 'Update client' })
   @ApiResponse({ status: 200, description: 'Client updated successfully' })
   async update(@Param('id') id: string, @Body() body: UpdateClientDto) {
-    return await this.clientService.updateClient(+id, body);
+    return await this.clientService.updateClient(id, body);
   }
 }

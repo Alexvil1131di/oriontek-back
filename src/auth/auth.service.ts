@@ -37,7 +37,7 @@ export class AuthService {
     return this.prisma.client.findMany({ select: userRequestData });
   }
 
-  private async checkIfUserExists(params: { id: number } | { email: string }) {
+  private async checkIfUserExists(params: { id: string } | { email: string }) {
     const { data: user, error } = await this.clientService.getOneClientBy(params);
     if (!error) throw new HttpException('user already exists', 409);
   }

@@ -15,7 +15,7 @@ export class ClientService {
     return this.prisma.client.findMany({ select: userRequestData });
   }
 
-  public async getOneClientBy(params: { id: number } | { email: string }) {
+  public async getOneClientBy(params: { id: string } | { email: string }) {
     const user = await this.prisma.client.findFirst({ where: params });
     if (!user) return { data: null, error: true };
     return { data: user, error: false };
@@ -28,17 +28,19 @@ export class ClientService {
     });
   }
 
-  public async updateClient(id: number, user: UpdateClientDto) {
+  public async updateClient(id: string, user: UpdateClientDto) {
     const { addresses, ...userData } = user;
 
     const client = await this.prisma.client.findUnique({ where: { id }, select: { id: true } });
     if (!client) throw new HttpException('Client not found', 404);
 
-    const [posts] = await this.prisma.$transaction([
-      userData ? this.prisma.client.update({ where: { id }, data: { ...userData }, select: userRequestData }) : undefined,
+    console.log(id);
+
+    await this.prisma.$transaction([
+      userData ? this.prisma.client.update({ where: { id: String(id) }, data: { ...userData }, select: userRequestData }) : undefined,
       ...addresses.map(address =>
         this.prisma.address.upsert({
-          where: { id: address.id || 0 },
+          where: { id: String(address.id) || undefined },
           update: { ...address },
           create: { ...address, clientId: id }
         }))

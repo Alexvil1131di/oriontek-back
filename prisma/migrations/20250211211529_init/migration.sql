@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Client" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "lastname" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -12,13 +12,13 @@ CREATE TABLE "Client" (
 
 -- CreateTable
 CREATE TABLE "Address" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "street" TEXT NOT NULL,
     "city" TEXT NOT NULL,
     "state" TEXT,
     "country" TEXT NOT NULL,
     "zip" TEXT,
-    "clientId" INTEGER NOT NULL,
+    "clientId" TEXT NOT NULL,
 
     CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );

@@ -1,6 +1,6 @@
 import { ApiProperty, OmitType, PartialType } from '@nestjs/swagger';
 import { Transform, TransformFnParams, Type } from 'class-transformer';
-import { IsArray, IsEmail, IsNotEmpty, IsNotEmptyObject, IsNumber, IsOptional, IsString, IsStrongPassword, Matches, ValidateNested } from 'class-validator';
+import { IsArray, IsEmail, IsNotEmpty, IsNotEmptyObject, IsNumber, IsOptional, IsString, IsStrongPassword, IsUUID, Matches, ValidateNested } from 'class-validator';
 import { AddressDto, CreateAddressDto, UpsertAddressDto } from 'src/address/entities/addresDto';
 
 export class CreateClientDto {
@@ -46,8 +46,8 @@ export class CreateClientDto {
 
 export class clientDto extends OmitType(CreateClientDto, ['password'] as const) {
     @ApiProperty({ example: 1 })
-    @IsNumber()
-    id: number;
+    @IsUUID()
+    id: string;
 }
 
 
