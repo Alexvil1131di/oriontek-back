@@ -1,0 +1,32 @@
+# Stage 1: Build the NestJS app
+FROM node:22.12.0-alpine AS builder
+# Set the working directory
+WORKDIR /app
+# Copy package.json and package-lock.json to install dependencies
+COPY package*.json ./
+# Install dependencies
+RUN npm install
+# Copy the rest of the application code
+COPY . .
+# Build the application
+RUN npm run build
+
+
+# Stage 2: Run the application
+FROM node:22.12.0-alpine
+# Set the working directory
+WORKDIR /app
+# Copy package.json and package-lock.json to install dependencies
+COPY package*.json ./
+# Copy the .env.production file from the root of the build context
+COPY .env.production /app/.env
+# Install 
+RUN npm install 
+# Copy the built app and Prisma schema from the builder stage
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/data /app/data
+# Expose the port that your app will run on
+EXPOSE 3001
+
+# Start the application
+CMD ["node", "dist/src/main"]
