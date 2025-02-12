@@ -28,6 +28,13 @@ export class ClientService {
     });
   }
 
+  public async deleteClient(id: string) {
+    const client = await this.prisma.client.findFirst({ where: { id }, select: { id: true, addresses } });
+    if (!client) throw new HttpException('Client not found', 404);
+    await this.prisma.address.deleteMany({ where: { clientId: id } });
+    await this.prisma.client.delete({ where: { id } });
+  }
+
   public async updateClient(id: string, user: UpdateClientDto) {
     const { addresses, ...userData } = user;
 

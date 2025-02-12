@@ -28,6 +28,7 @@ export class AuthService {
   }
 
   public async createNewUser(user: SignUpUserDto) {
+    console.log(process.env.ALLOWED_ORIGINS);
     await this.checkIfUserExists({ email: user.email });
     const password = await this.createSaltedPassword(user.password) as string;
     return this.clientService.createClient({ ...user, password });

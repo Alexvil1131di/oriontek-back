@@ -22,4 +22,11 @@ export class ClientController {
   async update(@Param('id') id: string, @Body() body: UpdateClientDto) {
     return await this.clientService.updateClient(id, body);
   }
+
+  @Delete('delete/:id')
+  @ApiOperation({ summary: 'Delete client' })
+  @ApiResponse({ status: 200, description: 'Client deleted successfully' })
+  async delete(@Param('id') id: string) {
+    return await this.clientService.deleteClient(id);
+  }
 }

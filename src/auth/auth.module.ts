@@ -7,8 +7,7 @@ import { ClientService } from 'src/client/client.service';
 
 const jwtConfig = JwtModule.register({
   global: true,
-  secret: process.env.JWT_SECRET,
-  signOptions: { expiresIn: '3600S' },
+  secret: process.env.JWT_SECRET
 });
 
 
